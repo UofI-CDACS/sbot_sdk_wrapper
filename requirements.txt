@@ -1,0 +1,4 @@
+numpy>=2.2.5
+opencv-python>=4.11.0.86
+pandas>=2.2.3
+standardbots==2.20241120.1
