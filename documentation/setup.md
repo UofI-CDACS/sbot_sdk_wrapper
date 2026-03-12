@@ -2,6 +2,19 @@
 
 This guide will help you install and configure the CDACS StandardBot wrapper for your development environment.
 
+## CRITICAL: Package Version Requirements
+
+> **WARNING: This wrapper REQUIRES a specific version of the standardbots package!**
+> 
+> **You MUST use: `standardbots==2.20241120.1`**
+> 
+> **DO NOT install any other version!** The wrapper is designed for this specific SDK version and other versions will cause compatibility issues and break functionality.
+> 
+> Always install using `requirements.txt` to ensure the correct version:
+> ```bash
+> pip install -r requirements.txt
+> ```
+
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
@@ -42,30 +55,54 @@ This guide will help you install and configure the CDACS StandardBot wrapper for
 cd ~/Projects
 
 # Clone the repository
-git clone <repository-url> sbot_sdk_wrapper
+git clone https://github.com/UofI-CDACS/sbot_sdk_wrapper
 cd sbot_sdk_wrapper
 ```
 
 ### Step 2: Install Python Dependencies
 
-The project requires several Python packages. Install them using pip:
+The project requires several Python packages **with specific versions**.
+
+**CRITICAL: You MUST install from requirements.txt to get the correct versions!**
 
 ```bash
-# Install all required packages
+# Install all required packages with correct versions
 pip install -r requirements.txt
+
+# NEVER run: pip install standardbots
+# This will install the wrong version and WILL break the wrapper!
 ```
 
 The `requirements.txt` includes:
-- `standardbots` - Official StandardBot Python SDK
-- `opencv-python` (cv2) - For camera image processing
-- `numpy` - For numerical operations
+- **`standardbots==2.20241120.1`** - EXACT version required (SDK dated 2024-11-20)
+- `opencv-python>=4.11.0.86` - For camera image processing
+- `numpy>=2.2.5` - For numerical operations
+- `pandas>=2.2.3` - For data handling
 
-### Step 3: Verify Installation
+### Step 3: Verify Installation and Versions
 
-Check that packages are installed correctly:
+Check that packages are installed correctly **with the correct versions**:
 
 ```bash
+# Check all packages imported
 python3 -c "import standardbots; import cv2; import numpy; print('All packages installed successfully!')"
+
+# CRITICAL: Verify standardbots version
+python3 -c "import standardbots; print(f'standardbots version: {standardbots.__version__}')"
+```
+
+**You MUST see:** `standardbots version: 2.20241120.1`
+
+**If you see ANY other version number:**
+```bash
+# Uninstall the wrong version
+pip uninstall standardbots
+
+# Reinstall from requirements.txt
+pip install -r requirements.txt
+
+# Verify again
+python3 -c "import standardbots; print(standardbots.__version__)"
 ```
 
 ## Robot Configuration
@@ -79,7 +116,7 @@ python3 -c "import standardbots; import cv2; import numpy; print('All packages i
 
 ### Getting Your Authentication Token
 
-1. Contact the CDACS lab administrator for your authentication token
+1. Contact the CDACS lab administrator or view the Teaching Pendant for your authentication token
 2. Each robot has a unique token for security
 3. Keep your token confidential
 
@@ -138,28 +175,12 @@ The robot controller must be accessible on your network:
 
 #### Lab Network (UFOI)
 
-1. Connect your computer to the lab network
+1. Connect your computer to the lab network (Nile Robot)
 2. Verify you can ping the robot:
    ```bash
    ping 10.8.4.11
    ```
 3. If successful, you should see responses
-
-#### Direct Connection
-
-For direct Ethernet connection:
-
-1. Connect Ethernet cable from computer to robot controller
-2. Configure static IP on your computer:
-   - IP: `10.8.4.100` (or similar, avoiding robot's IP)
-   - Subnet: `255.255.255.0`
-   - Gateway: `10.8.4.1`
-
-### Firewall Configuration
-
-Ensure your firewall allows:
-- Outbound TCP connections on port 3000
-- Communication with robot's IP address
 
 ## Verification
 
@@ -247,7 +268,11 @@ print("Gripper opened successfully!")
 
 **Solution**:
 ```bash
-pip install standardbots
+# IMPORTANT: Install from requirements.txt to get the correct version!
+pip install -r requirements.txt
+
+# DO NOT run: pip install standardbots
+# This will install the wrong version!
 ```
 
 **Problem**: `ModuleNotFoundError: No module named 'cv2'`
@@ -255,6 +280,7 @@ pip install standardbots
 **Solution**:
 ```bash
 pip install opencv-python
+# Or install all dependencies: pip install -r requirements.txt
 ```
 
 ### Authentication Errors

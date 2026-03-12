@@ -141,48 +141,6 @@ if img is not None:
     print(f"Grayscale image shape: {gray.shape}")  # (height, width)
 ```
 
-### Example 4: Object Detection (Red Objects)
-
-```python
-from src.camera import capture_image
-import cv2 as cv
-import numpy as np
-
-def detect_red_objects():
-    """Detect red-colored objects in camera view"""
-    
-    # Capture image
-    img = capture_image()
-    if img is None:
-        return None
-    
-    # Convert BGR to HSV color space
-    hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-    
-    # Define range for red color in HSV
-    lower_red = np.array([0, 100, 100])
-    upper_red = np.array([10, 255, 255])
-    
-    # Create mask for red objects
-    mask = cv.inRange(hsv, lower_red, upper_red)
-    
-    # Find contours
-    contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-    
-    # Draw contours on original image
-    result = img.copy()
-    cv.drawContours(result, contours, -1, (0, 255, 0), 2)
-    
-    # Save result
-    cv.imwrite('detected_objects.jpg', result)
-    
-    print(f"Found {len(contours)} red objects")
-    return contours
-
-# Usage
-contours = detect_red_objects()
-```
-
 ## Best Practices
 
 ### 1. Allow Camera to Settle
@@ -235,31 +193,6 @@ filename = f"capture_{timestamp}.jpg"
 img = capture_image()
 if img is not None:
     cv.imwrite(filename, img)
-```
-
-### 5. Camera Calibration
-
-For accurate vision-guided positioning, calibrate your camera:
-
-```python
-# Simplified calibration example
-# (Real calibration requires checkerboard patterns)
-
-def calibrate_camera_fov():
-    """
-    Measure field of view by imaging known-size object
-    """
-    # Place object of known size (e.g., 10cm square)
-    # at known distance from camera
-    
-    img = capture_image()
-    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-    
-    # Detect object corners
-    # Calculate pixels per meter
-    # Store calibration data
-    
-    pass
 ```
 
 ## Troubleshooting
