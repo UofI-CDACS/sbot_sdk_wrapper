@@ -4,7 +4,7 @@ A Python wrapper library for controlling the StandardBot R01 robot arm at the Un
 
 This wrapper provides simplified, student-friendly interfaces for common robot operations including movement control, digital IO, camera operations, and gripper control.
 
-## CRITICAL: Package Version Requirements
+## !!VERY IMPORTANT!! Package Version Requirements
 
 > **WARNING: This wrapper REQUIRES a specific version of the standardbots package!**
 > 
