@@ -31,7 +31,7 @@ from src.gripper import gripper_command, gripper_request
 |---------------|-------|
 | Model | OnRobot 2FG14 |
 | Stroke (Max Opening) | 110 mm (0.11 m) |
-| Min Grip Width | 26 mm (0.026 m) |
+| Min Grip Width (in our use cases)| 26 mm (0.026 m) |
 | Gripping Force Range | 10-140 N |
 | Payload | Up to 14 kg |
 | Grip Type | Parallel jaw, internal/external |

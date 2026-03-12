@@ -4,6 +4,21 @@ A Python wrapper library for controlling the StandardBot R01 robot arm at the Un
 
 This wrapper provides simplified, student-friendly interfaces for common robot operations including movement control, digital IO, camera operations, and gripper control.
 
+## CRITICAL: Package Version Requirements
+
+> **WARNING: This wrapper REQUIRES a specific version of the standardbots package!**
+> 
+> **You MUST use: `standardbots==2.20241120.1`**
+> 
+> **DO NOT use any other version!** Other versions may have incompatible API changes that will break this wrapper.
+> 
+> Always install from `requirements.txt` to ensure correct versions:
+> ```bash
+> pip install -r requirements.txt
+> ```
+> 
+> **Never run** `pip install standardbots` without the version specifier!
+
 ## Features
 
 - **Movement Control**: Cartesian and joint-space positioning
@@ -15,6 +30,7 @@ This wrapper provides simplified, student-friendly interfaces for common robot o
 
 ## Roadmap
 
+- Pictures for usuage of Teaching Pendant (how to find ip and token, etc)
 - Individual Joint Control
 - Modbus communications 
 - More camera functions
@@ -105,6 +121,8 @@ You'll need to activate the environment again next time you work on this project
 
 ### 3. Installation
 
+**CRITICAL: You MUST use requirements.txt to get the correct package versions!**
+
 **With the virtual environment activated:**
 
 ```bash
@@ -114,25 +132,37 @@ cd sbot_sdk_wrapper
 
 # Make sure your virtual environment is activated (you should see (venv) in your terminal)
 
-# Install dependencies
+# IMPORTANT: Install dependencies from requirements.txt
+# This ensures you get standardbots==2.20241120.1 (the ONLY compatible version)
 pip install -r requirements.txt
 
 # Wait for all packages to download and install...
 # This may take a few minutes
 ```
 
-**Verify Installation:**
+**Verify Installation and Check Versions:**
 ```bash
 # Test that packages installed correctly
 python -c "import standardbots; import cv2; import numpy; print('Success! All packages installed.')"
+
+# CRITICAL: Verify you have the correct standardbots version
+python -c "import standardbots; print(f'standardbots version: {standardbots.__version__}')"
+
+# You MUST see: standardbots version: 2.20241120.1
+# If you see ANY other version, REINSTALL using requirements.txt!
 ```
 
-If you see "Success! All packages installed." you're ready to go!
+If you see "Success! All packages installed." and the correct version, you're ready to go!
 
 **Troubleshooting:**
 - If `pip` command not found, try `pip3` instead
 - If you get permission errors, make sure your virtual environment is activated
 - On some systems you may need to use `python3` and `pip3` instead of `python` and `pip`
+- **If you have the wrong standardbots version:**
+  ```bash
+  pip uninstall standardbots
+  pip install -r requirements.txt
+  ```
 
 See [documentation/setup.md](documentation/setup.md) for detailed installation instructions and advanced setup options.
 
@@ -474,12 +504,24 @@ It may be helpful to read the [documentation](documentation/setup.md) to underst
 
 ## Requirements
 
-- Python 3.8+
-- standardbots Python SDK
-- OpenCV (cv2)
-- NumPy
+**CRITICAL - Specific Versions Required:**
 
-See `requirements.txt` for complete dependencies.
+- **Python 3.8 or higher**
+- **standardbots==2.20241120.1** (EXACT version required - DO NOT use any other version!)
+- **opencv-python>=4.11.0.86**
+- **numpy>=2.2.5**
+- **pandas>=2.2.3**
+
+**Installation:**
+```bash
+# ALWAYS install from requirements.txt to ensure correct versions
+pip install -r requirements.txt
+
+# NEVER run: pip install standardbots
+# This will install the wrong version and break the wrapper!
+```
+
+See `requirements.txt` for the pinned dependency versions.
 
 ## Contributing
 
@@ -501,3 +543,8 @@ For issues or questions:
 Current version: 1.0.0
 
 Last updated: 2026
+
+## Maintainers
+
+- [Pegasus](https://github.com/pegasora) - Dawson Burgess
+- University of Idaho
